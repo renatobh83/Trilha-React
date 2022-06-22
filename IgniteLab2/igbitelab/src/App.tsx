@@ -1,6 +1,9 @@
 import { gql, useQuery } from "@apollo/client";
 import { useEffect } from "react";
+import { Sidebar } from "./components/Sidebar";
+import { Video } from "./components/Video";
 import { client } from "./lib/apollo";
+import { Event } from "./pages/Event";
 
 const GET_LESSONS_QUERY = gql`
   query {
@@ -21,7 +24,7 @@ interface Lesson {
   title: string;
 }
 export function App() {
-  const { data } = useQuery<{ lessons: Lesson[] }>(GET_LESSONS_QUERY);
+  // const { data } = useQuery<{ lessons: Lesson[] }>(GET_LESSONS_QUERY);
   // useEffect(() => {
   //   client
   //     .query({
@@ -30,12 +33,12 @@ export function App() {
   //     .then((res) => console.log(res));
   // }, []);
   return (
-    <div className="text-2xl">
-      <ul>
-        {data?.lessons.map((lesson) => {
-          return <li key={lesson.id}>{lesson.title}</li>;
-        })}
-      </ul>
+    <div className="flex flex-col min-h-screen">
+      <Event />
+      <main className="flex flex-1">
+        <Video />
+        <Sidebar />
+      </main>
     </div>
   );
 }
