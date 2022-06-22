@@ -1,0 +1,61 @@
+.task {
+  display: flex;
+  padding: 16px;
+  justify-content: space-between;
+  gap: 12px;
+  background: #262626;
+  border: 1px solid #333333;
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.06);
+  border-radius: 8px;
+}
+.taskText {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  position: relative;
+}
+.taskText p {
+  color: #f2f2f2;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 140%;
+}
+
+.taskText span {
+  position: absolute;
+  display: block;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: #fff;
+}
+button {
+  background: transparent;
+  border: 0;
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  border-radius: 2px;
+}
+.task button:hover {
+  color: seagreen;
+}
+input[type="checkbox"]:checked ~ span {
+  background: #5e60ce;
+}
+input[type="checkbox"]:checked ~ p {
+  text-decoration-line: line-through;
+  color: #808080;
+}
+input[type="checkbox"] {
+  outline: none;
+  content: none;
+}
+label {
+  display: block;
+  width: 13px;
+  height: 13px;
+  border-radius: 100px;
+  cursor: pointer;
+}

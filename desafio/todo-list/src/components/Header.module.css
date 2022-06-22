@@ -1,0 +1,14 @@
+header {
+  background: #0d0d0d;
+}
+.header {
+  display: grid;
+  grid-template-columns: 1fr;
+  place-items: center center;
+  padding: 80px;
+}
+
+.header img {
+  height: 48px;
+  width: 126px;
+}
