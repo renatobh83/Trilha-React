@@ -28,7 +28,7 @@ export function TaskList({ task, onDeleteTask, onChangeTask }: TaskListProps) {
   return (
     <div className={styles.task}>
       <div className={styles.taskText}>
-        <input
+        {/* <input
           type="checkbox"
           name="check"
           id={task.id}
@@ -36,8 +36,19 @@ export function TaskList({ task, onDeleteTask, onChangeTask }: TaskListProps) {
         />
         <span>
           <label htmlFor={task.id} className={styles.inner}></label>
-        </span>
-        <p className={styles.teste}>{task.description}</p>
+        </span> */}
+        <label className={styles.checkboxContainer}>
+          <input
+            type="checkbox"
+            readOnly
+            checked={task.isComplete}
+            onChange={handleChecked}
+          />
+          <span className={styles.checkmark}></span>
+        </label>
+        <p className={task.isComplete ? `${styles.completed}` : ""}>
+          {task.description}
+        </p>
       </div>
       <button onClick={handleDelete}>
         <Trash />
