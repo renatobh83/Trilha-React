@@ -28,15 +28,6 @@ export function TaskList({ task, onDeleteTask, onChangeTask }: TaskListProps) {
   return (
     <div className={styles.task}>
       <div className={styles.taskText}>
-        {/* <input
-          type="checkbox"
-          name="check"
-          id={task.id}
-          onChange={handleChecked}
-        />
-        <span>
-          <label htmlFor={task.id} className={styles.inner}></label>
-        </span> */}
         <label className={styles.checkboxContainer}>
           <input
             type="checkbox"
