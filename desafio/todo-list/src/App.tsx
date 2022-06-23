@@ -4,8 +4,8 @@ import { Header } from "./components/Header";
 import styles from "./App.module.css";
 
 import logo from "./assets/Clipboard.svg";
-import { TaskList } from "./components/TaksList";
-import { ChangeEvent, InputHTMLAttributes, useEffect, useState } from "react";
+import { TaskList } from "./components/TaskList";
+import { ChangeEvent, useEffect, useState } from "react";
 
 interface Task {
   id: string;
@@ -14,7 +14,14 @@ interface Task {
 }
 
 export function App() {
-  const [tasks, setTasks] = useState<Array<Task>>([]);
+  const getInitialState = localStorage.getItem("toDo");
+
+  const [tasks, setTasks] = useState<Array<Task>>(() => {
+    if (getInitialState) {
+      return JSON.parse(getInitialState);
+    }
+    return [];
+  });
   const [task, setTask] = useState("");
   const [totalComplete, setTotalComplete] = useState(0);
 
@@ -22,12 +29,16 @@ export function App() {
     setTask(event.target.value);
   }
   function handleNewTask() {
-    const newTask = {
+    const newToDo = {
       id: uuid(),
       description: task,
       isComplete: false,
     };
-    setTasks([...tasks, newTask]);
+    setTasks((stage) => {
+      localStorage.setItem("toDo", JSON.stringify([...stage, newToDo]));
+      return [...stage, newToDo];
+    });
+
     setTask("");
   }
   function handleTaskOnchange(task: Task) {
@@ -37,11 +48,14 @@ export function App() {
     setTotalComplete(total.length || 0);
   }
   function handleDeleteTask(task: Task) {
-    const newtasks = tasks.filter((t) => {
+    if (task.isComplete) {
+      setTotalComplete(totalComplete - 1);
+    }
+    const newToDo = tasks.filter((t) => {
       return t.id !== task.id;
     });
-    if (newtasks.length === 0) setTotalComplete(0);
-    setTasks(newtasks);
+    localStorage.setItem("toDo", JSON.stringify(newToDo));
+    setTasks(newToDo);
   }
 
   return (
@@ -69,7 +83,7 @@ export function App() {
               <span className={styles.done}>Concluidas</span>{" "}
               <span
                 className={styles.counter}
-              >{`${totalComplete} de ${tasks.length}`}</span>
+              >{` ${totalComplete} de ${tasks.length}`}</span>
             </div>
           </div>
           <div className={styles.tasks}>
