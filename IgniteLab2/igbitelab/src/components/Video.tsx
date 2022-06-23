@@ -1,22 +1,73 @@
+import { DefaultUi, Player, Youtube } from "@vime/react";
 import {
   CaretRight,
   DiscordLogo,
   FileArrowDown,
   Lightning,
 } from "phosphor-react";
+import "@vime/core/themes/default.css";
+import { gql, useQuery } from "@apollo/client";
 
-export function Video() {
+interface VideoProps {
+  lessonSlug: string;
+}
+
+const GET_LESSON_BY_SLUG = gql`
+  query GetLessonBySlug($slug: String) {
+    lesson(where: { slug: $slug }) {
+      title
+      videoId
+      description
+      teacher {
+        bio
+        avatarURL
+        name
+      }
+    }
+  }
+`;
+interface GetLessonBySlugResponse {
+  lesson: {
+    title: String;
+    videoId: string;
+    description: string;
+    teacher: {
+      bio: string;
+      avatarURL: string;
+      name: string;
+    };
+  };
+}
+export function Video({ lessonSlug }: VideoProps) {
+  const { data } = useQuery<GetLessonBySlugResponse>(GET_LESSON_BY_SLUG, {
+    variables: {
+      slug: lessonSlug,
+    },
+  });
+
+  if (!data) {
+    return (
+      <div className="flex-1">
+        <p>Carregando....</p>
+      </div>
+    );
+  }
   return (
     <div className="flex-1">
       <div className="bg-black flex justify-center">
-        <div className="h-full w-full max-w-[1100px] max-h-[60vh] aspect-video"></div>
+        <div className="h-full w-full max-w-[1100px] max-h-[60vh] aspect-video">
+          <Player>
+            <Youtube videoId={data.lesson.videoId} />
+            <DefaultUi />
+          </Player>
+        </div>
       </div>
       <div className="p-8 max-w-[1100px] mx-auto">
         <div className="flex items-start gap-16">
           <div className="flex-1 ">
-            <h1 className="text-2xl font-bold">Aula 01 - Abertura</h1>
+            <h1 className="text-2xl font-bold">{data.lesson.title}</h1>
             <p className="mt-4 text-gray-200 leading-relaxed">
-              lorem ipsum dolor sit amet
+              {data.lesson.description}
             </p>
             <div className="flex items-center gap-4 mt-6">
               <img
@@ -26,7 +77,7 @@ export function Video() {
               />
               <div className="leading-relaxed">
                 <strong className="font-bold text-2xl block">
-                  Renato Lucio de Mendonca
+                  Renato Lucio de Mendonça
                 </strong>
                 <span className="text-gray-200 text-sm black ">
                   Lorem ipsum dolor sit amet
