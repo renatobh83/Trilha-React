@@ -19,11 +19,6 @@ const GET_LESSONS_QUERY = gql`
   }
 `;
 
-interface Lesson {
-  id: string;
-  title: string;
-}
-
 export function Event() {
   const { slug } = useParams<{ slug: string }>();
   // const { data } = useQuery<{ lessons: Lesson[] }>(GET_LESSONS_QUERY);
@@ -34,6 +29,7 @@ export function Event() {
   //     })
   //     .then((res) => console.log(res));
   // }, []);
+
   return (
     <div className="flex flex-col min-h-screen">
       <Header />
