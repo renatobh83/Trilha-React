@@ -23,11 +23,18 @@ export function App() {
     return [];
   });
   const [task, setTask] = useState("");
-  const [totalComplete, setTotalComplete] = useState(0);
+  const [totalComplete, setTotalComplete] = useState(() => {
+    if (getInitialState) {
+      return JSON.parse(getInitialState).filter(
+        (t: { isComplete: boolean }) => t.isComplete === true
+      ).length;
+    }
+  });
 
   function handleOnchange(event: ChangeEvent<HTMLInputElement>) {
     setTask(event.target.value);
   }
+
   function handleNewTask() {
     const newToDo = {
       id: uuid(),
@@ -47,6 +54,7 @@ export function App() {
     });
     setTotalComplete(total.length || 0);
   }
+
   function handleDeleteTask(task: Task) {
     if (task.isComplete) {
       setTotalComplete(totalComplete - 1);

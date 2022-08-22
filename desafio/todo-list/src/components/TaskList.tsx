@@ -1,6 +1,7 @@
 import { Trash } from "phosphor-react";
 import { ChangeEvent, useEffect } from "react";
 import styles from "./TaskList.module.css";
+
 interface TaskListProps {
   task: {
     description: string;
@@ -13,11 +14,22 @@ interface TaskListProps {
 
 export function TaskList({ task, onDeleteTask, onChangeTask }: TaskListProps) {
   function handleChecked(event: ChangeEvent<HTMLInputElement>) {
+    const lsTasks = localStorage.getItem("toDo");
+    let updateTask = [];
+    if (lsTasks) {
+      let oldTask = JSON.parse(lsTasks).filter(
+        (t: { id: string }) => t.id !== task.id
+      );
+      updateTask = oldTask;
+    }
+
     if (event.target.checked) {
       task.isComplete = true;
     } else {
       task.isComplete = false;
     }
+    updateTask.push(task);
+    localStorage.setItem("toDo", JSON.stringify(updateTask));
     onChangeTask(task);
   }
 

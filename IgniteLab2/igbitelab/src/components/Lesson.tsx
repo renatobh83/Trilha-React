@@ -28,7 +28,7 @@ export function Lesson(props: LessonProps) {
     <Link
       to={`/event/lesson/${props.slug}`}
       className={classNames("group relative", {
-        "before:absolute before:left-[-8px] before:bottom-[44px] before:bg-green-500 before:w-4 before:h-4 before:rotate-45 before:rounded-l-sm before:border-l before:border-b before:border-gray-500":
+        "before:absolute before:left-[-8px] before:bottom-[44px] before:bg-green-500 before:w-4 before:h-4 before:rotate-45 before:rounded-l-sm  before:border-l before:border-b before:border-gray-500":
           isLessonActive,
       })}
     >
