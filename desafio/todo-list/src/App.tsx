@@ -5,7 +5,7 @@ import styles from "./App.module.css";
 
 import logo from "./assets/Clipboard.svg";
 import { TaskList } from "./components/TaskList";
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useState } from "react";
 
 interface Task {
   id: string;
@@ -29,6 +29,7 @@ export function App() {
         (t: { isComplete: boolean }) => t.isComplete === true
       ).length;
     }
+    return 0;
   });
 
   function handleOnchange(event: ChangeEvent<HTMLInputElement>) {
